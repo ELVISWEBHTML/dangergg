@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site com fundo3</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('fundo3.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            backdrop-filter: blur(2px);
+        }
+
+        .titulo {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px #000;
+        }
+
+        .bloco {
+            width: 90%;
+            background: rgba(0,0,0,0.3);
+            margin: 15px auto;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .bloco img {
+            width: 100px;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .bloco-title {
+            font-size: 25px;
+            color: #fff;
+            text-shadow: 0 0 5px #000;
+        }
+
+        .socials img {
+            width: 45px;
+            height: 45px;
+            margin: 8px;
+            border-radius: 50%;
+            object-fit: cover;
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .logo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            position: relative;
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        .logo::after {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 146px;
+            height: 146px;
+            background: url('moldura.png') no-repeat center;
+            background-size: cover;
+            pointer-events: none;
+        }  /* CSS: fixa no meio embaixo, estilinho simples */
+.confirmar{
+  position: fixed;
+  left: 80%;
+  bottom: 20px;         /* distância do rodapé (ajuste se quiser) */
+  transform: translateX(-50%);
+  padding: 20px 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+  background: linear-gradient(180deg,#ff4d4d,#e60000);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+}
+.confirmar:active{ transform: translateX(-50%) translateY(1px); }
+        
+    </style>
+</head>
+<body>
+    
+        
+
+    <div class="container">
+        <h1 class="titulo">🔥 DANGER CAMP 🔥</h1>
+
+        <div class="bloco">
+            <div class="bloco-title">
+                📱 MODO SQUAD / FULL MÓBILE <br><br>
+                🥇 1º LUGAR: R$ 70,00 <br><br>
+                🥈 2º LUGAR: VAGA NO PRÓXIMO <br><br>
+                ✅ COM TABELA <br><br>
+                ✍🏽 INSCRIÇÃO: R$ 4,00 <br><br>
+                🏆 PREMIAÇÃO TOTAL: R$ 70,00 <br><br>
+                ⏰ 20H • 21H — SEMIFINAIS <br><br>
+                🪂 2 QUEDAS — BERMUDA E PURGATÓRIO <br><br>
+                ✅ PASSAM 6 CADA HORÁRIO <br><br>
+                ⏰ 22H — FINAL <br><br>
+                🪂 4 QUEDAS — BERMUDA | PURGATÓRIO | KALAHARI | NOVA TERRA
+                
+            </div>
+        </div>
+</div>
+        
+<!-- elemento (coloque onde quiser no HTML) -->
+<button id="btn-confirmar" class="confirmar" aria-label="Confirmar">CONFIRMAR</button>
+    </div>
+<script>
+/* JS: redireciona ao clicar.
+   substitua o valor de `targetUrl` pelo link desejado */
+const targetUrl = "https://chat.whatsapp.com/H0w3T8bE0SwBNl9gc6qxXJ?mode=hqrt2"; // <--- troque aqui
+document.getElementById("btn-confirmar").addEventListener("click", () => {
+  // abre na mesma aba:
+  window.location.href = targetUrl;
+
+  // se preferir abrir em nova aba, comente a linha acima e use:
+  // window.open(targetUrl, "_blank", "noopener,noreferrer");
+});
+</script>
+
+</body>
+</html>
