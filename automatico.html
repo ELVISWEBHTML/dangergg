@@ -70,90 +70,112 @@
 </head>
 <body>
 <div class="quiz-box" id="step1">
-    <h2>Recrutamento - Etapa 1</h2>
-    <label>Seu Nome</label>
-    <input type="text" id="nome" placeholder="Digite seu nome" />
-    <button onclick="goStep2()">Próximo</button>
+  <h2>Recrutamento - Etapa 1</h2>
+  <label>Seu Nome</label>
+  <input type="text" id="nome" placeholder="Digite seu nome">
+  <button onclick="goStep2()">Próximo</button>
 </div>
 
 <div class="quiz-box" id="step2" style="display:none;">
-    <h2>Recrutamento - Etapa 2</h2>
-    <label>Idade</label>
-    <input type="number" id="idade" placeholder="Digite sua idade" />
-    <button onclick="goStep3()">Próximo</button>
+  <h2>Recrutamento - Etapa 2</h2>
+  <label>Idade</label>
+  <input type="number" id="idade" placeholder="Digite sua idade">
+  <button onclick="goStep3()">Próximo</button>
 </div>
 
 <div class="quiz-box" id="step3" style="display:none;">
-    <h2>Recrutamento - Etapa 3</h2>
-    <label>Nick</label>
-    <input type="text" id="nick" placeholder="Nick do jogo" />
-    <label>ID</label>
-    <input type="text" id="idgame" placeholder="Seu ID" />
-    <button onclick="goStep4()">Finalizar</button>
+  <h2>Recrutamento - Etapa 3</h2>
+  <label>Nick</label>
+  <input type="text" id="nick" placeholder="Nick do jogo">
+  <label>ID do Free Fire</label>
+  <input type="text" id="idgame" placeholder="Seu ID do Free Fire">
+  <button onclick="goStep4()">Próximo</button>
 </div>
 
 <div class="quiz-box" id="step4" style="display:none;">
-    <h2>Escolha o ADM</h2>
+  <h2>Recrutamento - Etapa 4</h2>
+  <label>Contato do WhatsApp</label>
+  <input type="text" id="contato" placeholder="Ex: (85)996475859">
+  <button onclick="goStep5()">Finalizar</button>
+</div>
 
-    <div class="adm-card">
-        <img src="adm1.png">
-        <div>
-            <b>LIDER DRAK</b><br>
-            <small>+55 88 98169-2260</small>
-            <button onclick="sendAdm('5588981692260')">Enviar</button>
-        </div>
-    </div>
+<div class="quiz-box" id="step5" style="display:none;">
+  <h2>Escolha o ADM</h2>
 
-    <div class="adm-card">
-        <img src="adm2.png">
-        <div>
-            <b>LIDER KABULOSA</b><br>
-            <small>+55 85 9212-5491</small>
-            <button onclick="sendAdm('558592125491')">Enviar</button>
-        </div>
+  <div class="adm-card">
+    <img src="adm1.png">
+    <div>
+      <b>LIDER DRAK</b><br>
+      <small>+55 88 98169-2260</small>
+      <button onclick="sendAdm('5588981692260')">Enviar</button>
     </div>
+  </div>
 
-    <div class="adm-card">
-        <img src="adm3.png">
-        <div>
-            <b>ADM ELVIS</b><br>
-            <small>+55 83 99167-2088</small>
-            <button onclick="sendAdm('5583991672088')">Enviar</button>
-        </div>
+  <div class="adm-card">
+    <img src="adm2.png">
+    <div>
+      <b>LIDER KABULOSA</b><br>
+      <small>+55 85 9212-5491</small>
+      <button onclick="sendAdm('558592125491')">Enviar</button>
     </div>
+  </div>
+
+  <div class="adm-card">
+    <img src="adm3.png">
+    <div>
+      <b>ADM ELVIS</b><br>
+      <small>+55 83 99167-2088</small>
+      <button onclick="sendAdm('5583991672088')">Enviar</button>
+    </div>
+  </div>
 </div>
 
 <script>
 function goStep2(){
-    if(document.getElementById('nome').value.trim()==='') return alert('Digite seu nome');
-    document.getElementById('step1').style.display='none';
-    document.getElementById('step2').style.display='block';
+  if(document.getElementById('nome').value.trim()==='') return alert('Digite seu nome');
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').style.display='block';
 }
 
 function goStep3(){
-    let idade=document.getElementById('idade').value;
-    if(idade < 15) return alert('Idade mínima: 15 anos');
-    document.getElementById('step2').style.display='none';
-    document.getElementById('step3').style.display='block';
+  let idade=document.getElementById('idade').value;
+  if(idade < 15) return alert('Idade mínima: 15 anos');
+  document.getElementById('step2').style.display='none';
+  document.getElementById('step3').style.display='block';
 }
 
 function goStep4(){
-    if(document.getElementById('nick').value.trim()==='' || document.getElementById('idgame').value.trim()===''){
-        return alert('Preencha tudo');
-    }
-    document.getElementById('step3').style.display='none';
-    document.getElementById('step4').style.display='block';
+  if(document.getElementById('nick').value.trim()==='' || document.getElementById('idgame').value.trim()===''){
+    return alert('Preencha tudo');
+  }
+  document.getElementById('step3').style.display='none';
+  document.getElementById('step4').style.display='block';
+}
+
+function goStep5(){
+  if(document.getElementById('contato').value.trim()==='') return alert('Digite seu número de WhatsApp');
+  document.getElementById('step4').style.display='none';
+  document.getElementById('step5').style.display='block';
 }
 
 function sendAdm(numero){
-    let nome=document.getElementById('nome').value;
-    let idade=document.getElementById('idade').value;
-    let nick=document.getElementById('nick').value;
-    let idgame=document.getElementById('idgame').value;
+  let nome=document.getElementById('nome').value;
+  let idade=document.getElementById('idade').value;
+  let nick=document.getElementById('nick').value;
+  let idgame=document.getElementById('idgame').value;
+  let contato=document.getElementById('contato').value;
 
-    let msg = `Recrutamento Automatico!, EU LI ACORDO COM OS REQUISITOS NO SITE https://dangergg.netlify.app:%0A%0ANome: ${nome}%0AIdade: ${idade}%0ANick: ${nick}%0AID: ${idgame}`;
-    window.location.href = `https://wa.me/${numero}?text=${msg}`;
-}
+  let msg = `𝐅𝐎𝐑𝐌𝐔𝐋𝐀𝐑𝐈𝐎 𝐃𝐀 DANGER GAMING❤‍🔥%0A%0A` +
+            `𝐍𝐎𝐌𝐄 // ${nome}%0A%0A` +
+            `𝐈𝐃𝐀𝐃𝐄 // ${idade}%0A%0A` +
+            `𝐍𝐈𝐂𝐊 𝐍𝐎  𝐉𝐎𝐆𝐎 // ${nick}%0A%0A` +
+            `𝐂𝐎𝐍𝐓𝐀𝐓𝐎 𝐃𝐎 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 // ${contato}%0A%0A` +
+            `𝐈𝐃 𝐃𝐎 𝐅𝐑𝐄𝐄 𝐅𝐈𝐑𝐄 // ${idgame}%0A%0A` +
+            `𝐒𝐄𝐉𝐀 𝐁𝐄𝐌 𝐕𝐈𝐍𝐃𝐎 𝐀 𝐆𝐔𝐈𝐋𝐃𝐀 ❤‍🔥%0A%0A` +
+            `RECRUTAMENTO AUTOMATICO - https://dangergg.netlify.app`;
+
+  window.location.href = `https://wa.me/${numero}?text=${msg}`;
+     }
 </script>
 </body>
 </html>
