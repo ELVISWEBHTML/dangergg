@@ -1,9 +1,164 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Recrutamento</title>
+<style>
+/* 📌 Overlay bloqueia o site até checklist ser concluído */
+#dangerGate {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top, #1b0000 0%, #000 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999999;
+    animation: fadeIn .9s ease;
+}
+
+/* Container central com efeito vidro premium */
+#dangerBox{
+    width: 90%;
+    max-width: 750px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(14px);
+    padding: 40px 30px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 0 30px #fff;
+    animation: scaleIn .7s ease;
+}
+
+/* Títulos refinados */
+#dangerBox h1{
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #FFD54F;
+    text-shadow: 0 0 10px #FF3B3B;
+}
+#dangerBox h2{
+    margin-top: 5px;
+    font-size: 25px;
+    font-weight: 700;
+    opacity: .9;
+}
+
+/* Lista profissional */
+.dangerItem{
+    display: flex;
+    align-items:center;
+    gap: 5px;
+    margin-top: 12px;
+    font-size: 17px;
+    font-weight: 900;
+    opacity: .9;
+}
+.dangerItem input{
+    width: 23px;height: 23px;cursor:pointer;
+    accent-color:#FF3B3B;
+    filter: drop-shadow(0 0 6px #ff000090);
+}
+
+/* Barra de progresso */
+#dangerProgress{
+    height: 8px;
+    width: 0%;
+    margin-top:18px;
+    background: linear-gradient(90deg,#00E676,#00E676,#00E676);
+    border-radius: 6px;
+    transition: .35s ease;
+}
+
+/* Botão */
+#dangerConfirm{
+    margin-top:25px;
+    font-size:19px;
+    padding:14px 50px;
+    font-weight:900;
+    letter-spacing:.6px;
+    border:none;
+    border-radius:12px;
+    cursor:not-allowed;
+    opacity:.45;
+    background:linear-gradient(90deg,#FBC02D,#FBC02D,#FBC02D);
+    box-shadow:0 0 12px #ffffff15 inset;
+    transition:.35s;
+}
+#dangerConfirm.ready{
+    cursor:pointer;
+    opacity:1;
+    transform:translateY(-2px) scale(1.04);
+    box-shadow:0 0 18px #00ff9985;
+}
+
+/* Oculta com fade premium */
+.closeGate{
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .8s ease;
+}
+
+/* ANIMAÇÕES */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+</style>
+
+
+<div id="dangerGate">
+    <div id="dangerBox">
+
+        <h1>DANGER GG</h1>
+        <h2>🔥 requisitos obrigatório 🔥</h2>
+
+        <div class="dangerItem"><input type="checkbox" class="reqP"><label>⚔️ 150 Pontos na Guerra de Guildas</label></div>
+        <div class="dangerItem"><input type="checkbox" class="reqP"><label>⚔️ 3.000 Pontos semanais</label></div>
+        <div class="dangerItem"><input type="checkbox" class="reqP"><label>⚔️ Participação em xTreino/Eventos</label></div>
+        <div class="dangerItem"><input type="checkbox" class="reqP"><label>⚔️ acima de 15 anos</label></div>
+        <div class="dangerItem"><input type="checkbox" class="reqP"><label>⚔️ Respeito & Disciplina</label></div>
+        <div class="dangerItem"><input type="checkbox" class="reqP"><label>⚔️ Discord ativo</label></div>
+        <div class="dangerItem"><input type="checkbox" class="reqP"><label>⚔️ WhatsApp ativo</label></div>
+        <div class="dangerItem"><input type="checkbox" class="reqP"><label>⚔️ Jogar GG regularmente</label></div>
+
+        <div id="dangerProgress"></div>
+
+        <button id="dangerConfirm" disabled>ENTRAR</button>
+
+    </div>
+</div>
+
+
+<script>
+const req = document.querySelectorAll('.reqP');
+const btn = document.getElementById('dangerConfirm');
+const box = document.getElementById('dangerGate');
+const prog = document.getElementById('dangerProgress');
+
+req.forEach(r => r.addEventListener("change",()=>{
+    let checked = [...req].filter(i=>i.checked).length;
+    let total = req.length;
+    let percent = Math.round((checked/total)*100);
+    prog.style.width = percent+"%";
+
+    if(checked===total){
+        btn.classList.add("ready");
+        btn.disabled=false;
+    }else{
+        btn.classList.remove("ready");
+        btn.disabled=true;
+    }
+}));
+
+btn.addEventListener("click",()=>{
+    box.classList.add("closeGate");
+    setTimeout(()=>box.remove(),800);
+});
+</script>
+    
+    
+    
+    
 <style>
     body{
         margin:0;
@@ -67,7 +222,7 @@
     }
     .adm-card button{margin-top:6px;}
 </style>
-</head>
+<style id="htmlEditorProStyle">#htmlEditorPro{position:fixed;top:30px;left:50%;transform:translateX(-50%);width:95vw;max-width:420px;height:70vh;max-height:90vh;background:#222;color:#fff;z-index:999999;box-shadow:0 0 18px #0009;display:flex;flex-direction:column;font-family:'Fira Mono','Consolas','monospace';border-radius:12px;}#htmlEditorProBar{background:#333;padding:12px;cursor:move;display:flex;align-items:center;gap:10px;border-bottom:2px solid #fff;font-size:18px;user-select:none;border-top-left-radius:12px;border-top-right-radius:12px;}#htmlEditorProBar b{color:#fff;font-weight:bold;font-size:18px;letter-spacing:1px;font-family:inherit;}#htmlEditorProBtns{display:flex;gap:8px;margin-left:auto;}#htmlEditorProBtns button{padding:7px 10px;border:none;border-radius:7px;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px #0004;outline:none;}#htmlEditorProBtnRun{background:#0a0;color:#fff;}#htmlEditorProBtnSave{background:#06c;color:#fff;}#htmlEditorProBtnEdit{background:#f8d703;color:#222;}#htmlEditorProBtnClose{background:#c00;color:#fff;}#htmlEditorProBtnEnd{background:#444;color:#fff;}#htmlEditorPro textarea{flex:1;padding:10px;background:#222;color:#fff;font-family:inherit;font-size:14px;resize:none;border:none;outline:none;width:100%;height:100%;line-height:1.5;overflow:auto;border-bottom-left-radius:12px;border-bottom-right-radius:12px;}@media(max-width:600px){#htmlEditorPro{width:98vw;max-width:98vw;height:90vh;}#htmlEditorProBar{font-size:16px;padding:8px;}#htmlEditorProBtns button{font-size:15px;padding:6px 6px;}#htmlEditorPro textarea{font-size:12px;padding:6px;}}</style></head>
 <body>
 <div class="quiz-box" id="step1">
   <h2>Recrutamento - Etapa 1</h2>
@@ -177,5 +332,6 @@ function sendAdm(numero){
   window.location.href = `https://wa.me/${numero}?text=${msg}`;
      }
 </script>
-</body>
-</html>
+
+
+</body></html>
