@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /
+
+Allow: /recrutamento.html
+Allow: /rank¹.html
+Allow: /danger¹.html
+Allow: /camp.html
+Allow: /guilda.html
