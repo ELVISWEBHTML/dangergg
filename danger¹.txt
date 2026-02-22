@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DANGER GG - Recrutamento</title>
+<meta name="description" content="Faça parte da família DANGER GG! Recrutamento oficial para a guilda de Free Fire.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #000; color: #fff; min-height: 100vh; min-height: 100dvh; }
+.container { width: 100%; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+.header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+.header-back { background: none; border: none; color: #fff; cursor: pointer; padding: 4px; flex-shrink: 0; }
+.header-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); padding: 2px; position: relative; flex-shrink: 0; }
+.header-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.header-online { position: absolute; bottom: 0; right: 0; width: 12px; height: 12px; background: #22c55e; border-radius: 50%; border: 2px solid #000; }
+.header-info { flex: 1; min-width: 0; }
+.header-name { font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 6px; }
+.header-status { font-size: 13px; color: rgba(255,255,255,0.5); }
+.header-icons { display: flex; gap: 16px; flex-shrink: 0; }
+.header-icons svg { width: 26px; height: 26px; }
+.messages { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px; }
+.profile-card { display: flex; flex-direction: column; align-items: center; padding: 20px 0; margin-bottom: 16px; }
+.profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); padding: 3px; margin-bottom: 12px; }
+.profile-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.profile-name { font-weight: bold; font-size: 16px; }
+.profile-subtitle { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+.profile-stats { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 6px; }
+.profile-btn { margin-top: 12px; padding: 8px 20px; font-size: 15px; font-weight: 600; background: rgba(255,255,255,0.1); color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+.profile-follow { font-size: 13px; color: rgba(255,255,255,0.3); margin-top: 16px; text-align: center; }
+.message { margin-bottom: 10px; display: flex; animation: fadeIn 0.3s ease; }
+.message.bot { justify-content: flex-start; }
+.message.user { justify-content: flex-end; }
+.message-bubble { max-width: 80%; padding: 12px 18px; font-size: 16px; line-height: 1.5; }
+.message.bot .message-bubble { background: rgba(255,255,255,0.1); border-radius: 18px 18px 18px 4px; }
+.message.user .message-bubble { background: linear-gradient(135deg, #3b82f6, #9333ea); border-radius: 18px 18px 4px 18px; }
+.typing { display: flex; gap: 5px; padding: 14px 18px; background: rgba(255,255,255,0.1); border-radius: 18px 18px 18px 4px; width: fit-content; }
+.typing span { width: 10px; height: 10px; background: rgba(255,255,255,0.5); border-radius: 50%; animation: bounce 1.4s infinite; }
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+.requirements { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin: 16px 0; }
+.requirements h3 { text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 16px; }
+.req-item { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; cursor: pointer; }
+.req-checkbox { width: 24px; height: 24px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+.req-checkbox.checked { background: linear-gradient(135deg, #a855f7, #ec4899); border-color: transparent; }
+.req-checkbox svg { width: 14px; height: 14px; display: none; }
+.req-checkbox.checked svg { display: block; }
+.req-label { font-size: 15px; color: rgba(255,255,255,0.9); }
+.progress-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 8px; margin-top: 20px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #a855f7, #ec4899); transition: width 0.3s; }
+.progress-text { text-align: center; font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 10px; }
+.req-btn { width: 100%; margin-top: 20px; padding: 16px; font-size: 16px; font-weight: 600; border: none; border-radius: 14px; cursor: pointer; transition: all 0.2s; }
+.req-btn:disabled { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); cursor: not-allowed; }
+.req-btn:not(:disabled) { background: linear-gradient(90deg, #a855f7, #ec4899); color: #fff; }
+.admin-card { background: rgba(255,255,255,0.05); border:2px solid #25D366; border-radius:16px; padding:14px; display:flex; align-items:center; gap:14px; width:100%; box-sizing:border-box; transition:.2s; flex-direction: column; }
+.admin-card:hover { border-color: #1ebe5d; background: rgba(37, 211, 102, 0.05); }
+.admin-avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.admin-info { flex: 1; min-width: 0; }
+.admin-name { font-weight: 600; font-size: 16px; }
+.admin-role { font-size: 14px; color: rgba(255,255,255,0.5); }
+.admin-phone { font-size: 14px; color: #22c55e; }
+.admin-wa { width: 44px; height: 44px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.admin-wa svg { width: 24px; height: 24px; }
+.input-area { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+.input-row { display: flex; align-items: center; gap: 12px; }
+.input-field { flex: 1; display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 28px; padding: 12px 18px; }
+.input-field input { flex: 1; background: none; border: none; color: #fff; font-size: 16px; outline: none; min-width: 0; }
+.input-field input::placeholder { color: rgba(255,255,255,0.4); }
+.send-btn { color: #3b82f6; font-weight: 600; font-size: 16px; background: none; border: none; cursor: pointer; flex-shrink: 0; }
+.backup-btn { margin-top: 12px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; font-size: 14px; color: rgba(255,255,255,0.5); background: none; border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s; }
+.backup-btn:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.8); }
+.confirm-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; margin: 16px 0; }
+.confirm-title { text-align: center; font-weight: bold; margin-bottom: 16px; font-size: 16px; color: #a855f7; }
+.confirm-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.confirm-item:last-child { border-bottom: none; }
+.confirm-label { color: rgba(255,255,255,0.6); font-size: 14px; }
+.confirm-value { color: #fff; font-weight: 600; font-size: 15px; }
+.confirm-buttons { display: flex; gap: 10px; margin-top: 16px; }
+.confirm-btn { flex: 1; padding: 14px; font-size: 15px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+.confirm-btn.yes { background: linear-gradient(90deg, #22c55e, #16a34a); color: #fff; }
+.confirm-btn.no { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+.loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; margin-left: 8px; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+<style id="htmlEditorProStyle">#htmlEditorPro{position:fixed;top:30px;left:50%;transform:translateX(-50%);width:95vw;max-width:420px;height:70vh;max-height:90vh;background:#222;color:#fff;z-index:999999;box-shadow:0 0 18px #0009;display:flex;flex-direction:column;font-family:'Fira Mono','Consolas','monospace';border-radius:12px;}#htmlEditorProBar{background:#333;padding:12px;cursor:move;display:flex;align-items:center;gap:10px;border-bottom:2px solid #fff;font-size:18px;user-select:none;border-top-left-radius:12px;border-top-right-radius:12px;}#htmlEditorProBar b{color:#fff;font-weight:bold;font-size:18px;letter-spacing:1px;font-family:inherit;}#htmlEditorProBtns{display:flex;gap:8px;margin-left:auto;}#htmlEditorProBtns button{padding:7px 10px;border:none;border-radius:7px;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px #0004;outline:none;}#htmlEditorProBtnRun{background:#0a0;color:#fff;}#htmlEditorProBtnSave{background:#06c;color:#fff;}#htmlEditorProBtnEdit{background:#f8d703;color:#222;}#htmlEditorProBtnClose{background:#c00;color:#fff;}#htmlEditorProBtnEnd{background:#444;color:#fff;}#htmlEditorPro textarea{flex:1;padding:10px;background:#222;color:#fff;font-family:inherit;font-size:14px;resize:none;border:none;outline:none;width:100%;height:100%;line-height:1.5;overflow:auto;border-bottom-left-radius:12px;border-bottom-right-radius:12px;}@media(max-width:600px){#htmlEditorPro{width:98vw;max-width:98vw;height:90vh;}#htmlEditorProBar{font-size:16px;padding:8px;}#htmlEditorProBtns button{font-size:15px;padding:6px 6px;}#htmlEditorPro textarea{font-size:12px;padding:6px;}}</style></head>
+<body>
+<div class="container">
+  <header class="header">
+    <button class="header-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></button>
+    <div class="header-avatar"><img src="logo.png" alt="DANGER GG"><span class="header-online"></span></div>
+    <div class="header-info">
+      <div class="header-name">
+    dangergg_ff
+    <img src="verificado.png" width="20px" alt="verificado">
+      </div>
+      <div class="header-status">Ativo(a) agora</div>
+    </div>
+    <div class="header-icons">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7zM14 5H3a2 2 0 00-2 2v10a2 2 0 002 2h11a2 2 0 002-2V7a2 2 0 00-2-2z"></path></svg>
+    </div>
+  </header>
+
+  <div class="messages" id="messages">
+    <div class="profile-card">
+      <div class="profile-avatar"><img src="logo.png" alt="DANGER GG"></div>
+      <div class="profile-name">dangergg_ff</div>
+      <div class="profile-subtitle">DANGER GG · Instagram</div>
+      <div class="profile-stats">10,3 mil seguidores · 64 publicações</div>
+      <button class="profile-btn">Ver perfil</button>
+      <div class="profile-follow">Vocês se seguem no Instagram</div>
+    </div>
+  <div class="message bot"><div class="message-bubble">AVISO</div></div><div class="message bot"><div class="message-bubble">TENHA COMPROMISSO!</div></div></div>
+
+  <div class="input-area">
+    <div class="input-row">
+      <div class="input-field">
+        <input type="text" id="userInput" placeholder="Enviar mensagem..." disabled="">
+      </div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Enviar</button>
+    </div>
+
+<script>
+const ADMINS = [
+  { name: "LIDER DRAK", role: "Líder", phone: "+55 88 98169-2260", whatsapp: "5588981692260", image: "adm1.png" },
+  { name: "LIDER KABULOSA", role: "Líder", phone: "+55 85 9212-5491", whatsapp: "558592125491", image: "adm2.png" },
+  { name: "ADM ELVIS", role: "Administrador", phone: "+55 83 99167-2088", whatsapp: "5583991672088", image: "adm3.png" }
+];
+const REQUIREMENTS = ["150 Pontos na Guerra de Guildas","3.000 Pontos semanais","Participação em xTreino/Eventos","Ter compromisso","Respeito & Disciplina","Discord ativo","WhatsApp ativo","Jogar GG regularmente"];
+let phase = 'greeting', formData = {}, checkedItems = new Array(8).fill(false);
+let playerData = null;
+
+function addMessage(text, isBot, type = 'text') {
+  const container = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'message ' + (isBot ? 'bot' : 'user');
+  
+  if (type === 'requirements') {
+    div.innerHTML = `<div class="requirements"><h3>🔥 Requisitos da DANGER GG¹ 🔥</h3>${REQUIREMENTS.map((r,i) => `<label class="req-item" onclick="toggleReq(${i})"><div class="req-checkbox" id="check${i}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><span class="req-label">⚔️ ${r}</span></label>`).join('')}<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div><p class="progress-text" id="progressText">0/8 requisitos</p><button class="req-btn" id="reqBtn" disabled onclick="confirmReq()">Marque todos os requisitos</button></div>`;
+  } else if (type === 'funcao') {
+    const FUNCOES = [
+      { key: 'RUSH',       label: 'RUSH',       img: 'data:image/png;base64,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',  border: '#ef4444', glow: 'rgba(239,68,68,0.25)' },
+      { key: 'CURANDEIRO', label: 'CURANDEIRO', img: 'data:image/png;base64,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',   border: '#22c55e', glow: 'rgba(34,197,94,0.25)'  },
+      { key: 'FULL GAS',   label: 'FULL GÁS',   img: 'data:image/png;base64,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',  border: '#f59e0b', glow: 'rgba(245,158,11,0.25)' }
+    ];
+    div.innerHTML = `<div class="message-bubble" style="max-width:100%;padding:0;background:transparent;">
+      <div class="requirements" style="padding:16px;">
+        <h3 style="margin-bottom:6px;">⚔️ Sua Função na Guerra de Guildas</h3>
+        <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:16px;">Escolha como você joga na GdG</p>
+        ${FUNCOES.map(f => `
+        <div onclick="selectFuncao('${f.key}')" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 16px;margin-bottom:10px;cursor:pointer;transition:all .25s;"
+          onmouseover="this.style.borderColor='${f.border}';this.style.boxShadow='0 0 14px ${f.glow}'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.boxShadow='none'">
+          <img src="${f.img}" style="width:48px;height:48px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 8px ${f.glow})">
+          <div style="flex:1">
+            <div style="font-size:17px;font-weight:800;letter-spacing:.04em">${f.label}</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  } else if (type === 'pontuacao') {
+    const OPCOES = [
+      { label: '50 – 100 pts',    sub: 'Iniciante',       color: '#94a3b8' },
+      { label: '100 – 150 pts',    sub: 'Regular',         color: '#22c55e' },
+      { label: '200 – 300 pts',    sub: 'Bom',             color: '#3b82f6' },
+      { label: '400 – 500 pts',    sub: 'Ótimo',           color: '#a855f7' },
+      { label: '500+ pts',         sub: 'Elite 🔥',        color: '#f59e0b' },
+      { label: 'Nunca joguei GdG', sub: 'Sem experiência', color: '#6b7280' }
+    ];
+    div.innerHTML = `<div class="message-bubble" style="max-width:100%;padding:0;background:transparent;">
+      <div class="requirements" style="padding:16px;">
+        <h3 style="margin-bottom:6px;">🏆 Mínimos Pontos na GdG</h3>
+        <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:16px;">Quantos pontos você costuma fazer na Guerra de Guildas?</p>
+        ${OPCOES.map(o => `
+        <div onclick="selectPontuacao('${o.label}')" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.1);border-radius:12px;padding:11px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;"
+          onmouseover="this.style.borderColor='${o.color}';this.style.background='rgba(255,255,255,0.07)'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.04)'">
+          <div style="width:10px;height:10px;border-radius:50%;background:${o.color};flex-shrink:0;box-shadow:0 0 8px ${o.color}"></div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:700">${o.label}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px">${o.sub}</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  } else if (type === 'admins') {
+    div.innerHTML = ADMINS.map(a => `<div class="admin-card" onclick="sendToAdmin('${a.whatsapp}','${a.name}')"><img class="admin-avatar" src="${a.image}" alt="${a.name}"><div class="admin-info"><div class="admin-name">${a.name}</div><div class="admin-role">${a.role}</div><div class="admin-phone">${a.phone}</div></div><div class="admin-wa"><svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div></div>`).join('');
+  } else if (type === 'confirm') {
+    div.innerHTML = '<div class="message-bubble" style="max-width: 100%; padding: 0; background: transparent;"><div class="confirm-card"><div class="confirm-title">🎮 Confirme seus dados</div><div class="confirm-item"><div class="confirm-label">Nickname:</div><div class="confirm-value">' + text.nick + '</div></div><div class="confirm-item"><div class="confirm-label">ID:</div><div class="confirm-value">' + text.id + '</div></div><div class="confirm-item"><div class="confirm-label">Level:</div><div class="confirm-value">' + text.level + '</div></div><div class="confirm-buttons"><button class="confirm-btn yes" onclick="confirmPlayerData(true)">✓ Está correto</button><button class="confirm-btn no" onclick="confirmPlayerData(false)">✗ Está errado</button></div></div></div>';
+  } else {
+    div.innerHTML = `<div class="message-bubble">${text}</div>`;
+  }
+  
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.id = 'typing';
+  div.className = 'message bot';
+  div.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function hideTyping() { document.getElementById('typing')?.remove(); }
+
+function botMessage(text, type = 'text', delay = 1200) {
+  showTyping();
+  setTimeout(() => { hideTyping(); addMessage(text, true, type); }, delay);
+}
+
+function toggleReq(i) {
+  checkedItems[i] = !checkedItems[i];
+  const el = document.getElementById('check' + i);
+  el.classList.toggle('checked', checkedItems[i]);
+  const count = checkedItems.filter(Boolean).length;
+  document.getElementById('progressFill').style.width = (count/8*100) + '%';
+  document.getElementById('progressText').textContent = count + '/8 requisitos';
+  const btn = document.getElementById('reqBtn');
+  btn.disabled = count < 8;
+  btn.textContent = count === 8 ? 'Confirmar ✓' : 'Marque todos os requisitos';
+}
+
+function confirmReq() {
+  addMessage('Pronto! Marquei tudo ✅', false);
+  setTimeout(() => {
+    botMessage('Show demais! Você atende todos os requisitos! 🎉', 'text', 1000);
+    setTimeout(() => {
+      botMessage('Agora vou precisar de algumas informações suas, pode ser? É rapidinho! 😊', 'text', 1500);
+      setTimeout(() => {
+        botMessage('Me conta, qual é o seu nome?', 'text', 1200);
+        setTimeout(() => { phase = 'nome'; enableInput('Digite seu nome...'); }, 1400);
+      }, 1800);
+    }, 1300);
+  }, 500);
+}
+
+function enableInput(placeholder) {
+  const input = document.getElementById('userInput');
+  input.disabled = false;
+  input.placeholder = placeholder;
+  input.focus();
+}
+
+async function fetchPlayerData(id) {
+  try {
+    const response = await fetch('https://elvis-ff-info.vercel.app/?id=' + id);
+    const data = await response.json();
+    
+    if (data.success && data.data && data.data.perfil) {
+      return {
+        success: true,
+        nickname: data.data.perfil.nickname,
+        id: data.data.perfil.id,
+        level: data.data.perfil.nivel
+      };
+    }
+    return { success: false };
+  } catch (error) {
+    console.error('Erro ao buscar dados:', error);
+    return { success: false };
+  }
+}
+
+function confirmPlayerData(confirmed) {
+  if (confirmed) {
+    addMessage('Sim, está correto! ✅', false);
+    formData.nick = playerData.nickname;
+    setTimeout(() => {
+      botMessage('Perfeito! Nick confirmado: ' + playerData.nickname + ' 🔥', 'text', 800);
+      setTimeout(() => {
+        botMessage('Por último, seu WhatsApp? 📱', 'text', 1400);
+        setTimeout(() => { phase = 'contato'; enableInput('Ex: (85) 99999-9999'); }, 1600);
+      }, 1000);
+    }, 500);
+  } else {
+    addMessage('Não, está errado ✗', false);
+    playerData = null;
+    setTimeout(() => {
+      botMessage('Sem problemas! Vamos tentar de novo. Me passa o ID correto do Free Fire:', 'text', 1000);
+      setTimeout(() => { phase = 'idGame'; enableInput('Digite seu ID...'); }, 1200);
+    }, 500);
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const value = input.value.trim();
+  if (!value) return;
+  
+  if (phase === 'idade' && (isNaN(parseInt(value)) || parseInt(value) < 1)) {
+    addMessage(value, false);
+    setTimeout(() => botMessage('Eita, a idade mínima é  anos! Me passa sua idade certinha 😅', 'text', 800), 300);
+    input.value = '';
+    return;
+  }
+  
+  addMessage(value, false);
+  input.value = '';
+  input.disabled = true;
+  
+  if (phase === 'idGame') {
+    botMessage('Consultando seu ID... <span class="loading-spinner"></span>', 'text', 500);
+    
+    const data = await fetchPlayerData(value);
+    
+    setTimeout(() => {
+      hideTyping();
+      
+      if (data.success) {
+        playerData = data;
+        formData.idGame = value;
+        
+        botMessage('ID encontrado! 🎮', 'text', 800);
+        setTimeout(() => {
+          botMessage('Verifique se os dados estão corretos:', 'text', 1000);
+          setTimeout(() => {
+            addMessage({
+              nick: data.nickname,
+              id: data.id,
+              level: data.level
+            }, true, 'confirm');
+            phase = 'waiting_confirm';
+          }, 1200);
+        }, 1000);
+      } else {
+        botMessage('Ops! Não consegui encontrar esse ID. Tem certeza que digitou certo? 🤔', 'text', 1000);
+        setTimeout(() => {
+          botMessage('Tenta de novo, por favor:', 'text', 1200);
+          setTimeout(() => { phase = 'idGame'; enableInput('Digite seu ID...'); }, 1400);
+        }, 1400);
+      }
+    }, 1500);
+    
+    return;
+  }
+  
+  formData[phase] = value;
+  
+  const flows = {
+    nome: () => { botMessage('Prazer, ' + value + '! Nome bonito! 😄', 'text', 800); setTimeout(() => { botMessage('Quantos anos você tem?', 'text', 1200); setTimeout(() => { phase = 'idade'; enableInput('Digite sua idade...'); }, 1400); }, 1000); },
+    idade: () => { botMessage('Perfeito! Idade boa! 👍', 'text', 800); setTimeout(() => { botMessage('E qual é seu ID do Free Fire?', 'text', 1200); setTimeout(() => { phase = 'idGame'; enableInput('Digite seu ID...'); }, 1400); }, 1000); },
+    contato: () => { botMessage('Maravilha! Anotei tudo! 📝', 'text', 800); setTimeout(() => { botMessage('Agora me diz: qual é sua função na Guerra de Guildas? ⚔️', 'text', 1300); setTimeout(() => { addMessage('', true, 'funcao'); phase = 'funcao'; }, 1500); }, 1000); }
+  };
+  
+  setTimeout(() => flows[phase]?.(), 400);
+}
+
+function selectFuncao(funcao) {
+  if (phase !== 'funcao') return;
+  formData.funcao = funcao;
+  addMessage('Minha função é ' + funcao + ' ⚔️', false);
+  setTimeout(() => {
+    botMessage('Boa escolha! 🔥', 'text', 800);
+    setTimeout(() => {
+      botMessage('Agora me diz: quantos pontos você costuma fazer na Guerra de Guildas? 🏆', 'text', 1300);
+      setTimeout(() => { addMessage('', true, 'pontuacao'); phase = 'pontuacao'; }, 1500);
+    }, 1000);
+  }, 400);
+}
+
+function selectPontuacao(pts) {
+  if (phase !== 'pontuacao') return;
+  formData.pontuacao = pts;
+  addMessage(pts + ' 🏆', false);
+  setTimeout(() => {
+    botMessage('Anotado! 📝', 'text', 800);
+    setTimeout(() => {
+      botMessage('Você tá quase dentro da família DANGER! 🔥❤️‍🔥', 'text', 1300);
+      setTimeout(() => {
+        botMessage('Escolha um líder pra enviar seu formulario:', 'text', 1500);
+        setTimeout(() => { addMessage('', true, 'admins'); phase = 'done'; }, 1700);
+      }, 1500);
+    }, 1000);
+  }, 400);
+}
+
+function sendToAdmin(whatsapp, name) {
+  addMessage('Vou falar com ' + name + '! 👋', false);
+  setTimeout(() => {
+    botMessage('Ótima escolha! Redirecionando... Bem-vindo à DANGER GG! 🔥❤️‍🔥', 'text', 1000);
+    setTimeout(() => {
+      const msg = encodeURIComponent('𝐅𝐎𝐑𝐌𝐔𝐋𝐀𝐑𝐈𝐎 𝐃𝐀 DANGER GAMING❤‍🔥\n\n𝐍𝐎𝐌𝐄 // ' + formData.nome + '\n\n𝐈𝐃𝐀𝐃𝐄 // ' + formData.idade + '\n\n𝐍𝐈𝐂𝐊 𝐍𝐎 𝐉𝐎𝐆𝐎 // ' + formData.nick + '\n\n𝐂𝐎𝐍𝐓𝐀𝐓𝐎 𝐃𝐎 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 // ' + formData.contato + '\n\n𝐈𝐃 𝐃𝐎 𝐅𝐑𝐄𝐄 𝐅𝐈𝐑𝐄 // ' + formData.idGame + '\n\n𝑭𝑼𝑵ÇÃ𝑶 // ' + formData.funcao + '\n\n🏆 𝐌Í𝐍𝐈𝐌𝐎𝐒 𝐏𝐎𝐍𝐓𝐎𝐒 𝐍𝐀 𝐆𝐃𝐆 // ' + formData.pontuacao + '\n\n𝐒𝐄𝐉𝐀 𝐁𝐄𝐌 𝐕𝐈𝐍𝐃𝐎 𝐀 𝐆𝐔𝐈𝐋𝐃𝐀 ❤‍🔥\n\n𝐏𝐑𝐄𝐄𝐍𝐂𝐇𝐀 𝐎 𝐅𝐎𝐑𝐌𝐔𝐋𝐀́𝐑𝐈𝐎 𝐄 𝐌𝐀𝐍𝐃𝐄 𝐏𝐑𝐀 𝐌𝐈𝐌..\n\nRECRUTAMENTO POR CHAT - https://dangergg.netlify.app\n\nAVISO: LEVAR O MEMBRO PARA GUILDA GG¹');
+      window.location.href = 'https://wa.me/' + whatsapp + '?text=' + msg;
+    }, 1500);
+  }, 500);
+}
+
+document.getElementById('userInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+
+// Start greeting
+const greetings = ['Oii! 👋', 'Tudo bem com você?', 'Que bom te ver por aqui! 🔥', 'Bem-vindo(a) ao recrutamento da DANGER GG! ❤️‍🔥', 'Você vai ser recrutado para guilda DANGER GG¹ vamos la!'];
+let delay = 800;
+greetings.forEach((msg, i) => { setTimeout(() => botMessage(msg, 'text', 1000), delay); delay += 2000; });
+setTimeout(() => {
+  botMessage('Preciso te mostrar nossos requisitos. Marca os que você consegue cumprir! 💪', 'text', 1500);
+  setTimeout(() => addMessage('', true, 'requirements'), 2000);
+}, delay);
+</script>
+
+
+</div></div></body></html>
